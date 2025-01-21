@@ -4,6 +4,6 @@ import { TopPageService } from './top-page.service';
 
 @Module({
   controllers: [TopPageController],
-  providers: [TopPageService]
+  providers: [TopPageService],
 })
 export class TopPageModule {}

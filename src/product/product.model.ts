@@ -11,9 +11,11 @@ export class PrductModel {
   oldPrice: number;
   @Prop()
   credit: number;
+  @Prop()
   calculatedRating: number;
   @Prop()
   description: string;
+  @Prop()
   advantages: string;
   @Prop()
   disAdvantages: string;

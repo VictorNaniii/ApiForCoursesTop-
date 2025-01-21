@@ -30,4 +30,12 @@ export class ReviewService {
     if (!findProduct) throw new NotFoundException('Product not found');
     return findProduct;
   }
+
+  async deleteAllReviewByProduct(productId: string) {
+    const deleteDoc = await this.reviewModel
+      .deleteMany({
+        productId: new Types.ObjectId(productId),
+      })
+      .exec();
+  }
 }

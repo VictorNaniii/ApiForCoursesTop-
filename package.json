@@ -26,6 +26,8 @@
     "@nestjs/mongoose": "^11.0.0",
     "@nestjs/platform-express": "^10.0.0",
     "bson": "^6.10.1",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.1",
     "mongoose": "^8.9.5",
     "mongose": "^0.0.2-security",
     "reflect-metadata": "^0.2.0",

@@ -13,6 +13,7 @@ import { ReviewModule } from './review.module';
 import { CreateReviewDto } from './dto/create-review-dto';
 import { ReviewService } from './review.service';
 import { JwtAuthGuard } from 'src/auth/guards/jwt.guards';
+import { UserEmail } from 'src/decorators/user-email.decorators';
 
 @Controller('review')
 export class ReviewController {
@@ -24,7 +25,8 @@ export class ReviewController {
   }
   @UseGuards(JwtAuthGuard)
   @Delete(':id')
-  async delete(@Param('id') id: string) {
+  async delete(@Param('id') id: string, @UserEmail() email: string) {
+    console.log(email);
     return this.reviewService.delete(id);
   }
 

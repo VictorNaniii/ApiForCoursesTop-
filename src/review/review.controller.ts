@@ -5,12 +5,14 @@ import {
   Get,
   Param,
   Post,
+  UseGuards,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
 import { ReviewModule } from './review.module';
 import { CreateReviewDto } from './dto/create-review-dto';
 import { ReviewService } from './review.service';
+import { JwtAuthGuard } from 'src/auth/guards/jwt.guards';
 
 @Controller('review')
 export class ReviewController {
@@ -20,7 +22,7 @@ export class ReviewController {
   async create(@Body() dto: CreateReviewDto) {
     return this.reviewService.create(dto);
   }
-
+  @UseGuards(JwtAuthGuard)
   @Delete(':id')
   async delete(@Param('id') id: string) {
     return this.reviewService.delete(id);

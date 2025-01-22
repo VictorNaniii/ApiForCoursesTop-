@@ -1,4 +1,8 @@
+import { IsEmail, IsString } from 'class-validator';
+
 export class registerDto {
+  @IsEmail()
   email: string;
-  passwordHash: string;
+  @IsString()
+  password: string;
 }

@@ -17,7 +17,7 @@ export class ProductService {
     const CreateProduct = await this.productModel.create(dto);
     if (!CreateProduct)
       throw new NotFoundException(
-        'Somntghing went wrong please complete all data',
+        'Something went wrong please complete all data',
       );
 
     return CreateProduct;
@@ -84,6 +84,16 @@ export class ProductService {
           $addFields: {
             reviewCount: { $size: '$review' },
             reviewAvg: { $avg: '$review.rating' },
+            review: {
+              $function: {
+                body: `function(reviews){
+                        reviews.sort((a,b)=>{new Date(b.createdAt) -new Date(a.createdAt)})
+                      return reviews;
+                }`,
+                args: ['$review'],
+                lang: 'js',
+              },
+            },
           },
         },
       ])

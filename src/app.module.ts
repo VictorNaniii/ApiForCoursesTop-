@@ -9,6 +9,7 @@ import { TopPageModule } from './top-page/top-page.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { Mongoose } from 'mongoose';
 import { MongooseModule } from '@nestjs/mongoose';
+import { TelegramModule } from './telegram/telegram.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { MongooseModule } from '@nestjs/mongoose';
     ProductModule,
     ReviewModule,
     TopPageModule,
+    TelegramModule,
   ],
   controllers: [AppController],
   providers: [AppService],

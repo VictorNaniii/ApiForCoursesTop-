@@ -28,6 +28,7 @@ export class TopPageAdvantages {
   @Prop()
   description: string;
 }
+
 @Schema({ timestamps: true })
 export class TopPageModel {
   @Prop({ enum: TopLevelCategory })
@@ -61,3 +62,5 @@ export class TopPageModel {
   tags: string[];
 }
 export const TopPageSchema = SchemaFactory.createForClass(TopPageModel);
+
+TopPageSchema.index({ '$**': 'text' });

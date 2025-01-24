@@ -9,6 +9,7 @@ import {
   Post,
   UsePipes,
   ValidationPipe,
+  Query,
 } from '@nestjs/common';
 
 import { FindProductDto } from './dto/FindProductDto';
@@ -50,5 +51,10 @@ export class TopPageController {
   @Post('find')
   async find(@Body() dto: FindProductDto) {
     return this.topPageService.find(dto);
+  }
+
+  @Get('getText/:text')
+  async search(@Param('text') text: string) {
+    return this.topPageService.searchInTheWholePage(text);
   }
 }

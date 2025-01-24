@@ -1,9 +1,14 @@
-import { BadGatewayException, Injectable } from '@nestjs/common';
+import {
+  BadGatewayException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { TopPageModel } from './TopPageModel';
 import { TopPageDto } from './dto/top-pageDto';
 import { Model } from 'mongoose';
 import { FindProductDto } from './dto/FindProductDto';
+import { title } from 'process';
 
 @Injectable()
 export class TopPageService {
@@ -42,15 +47,33 @@ export class TopPageService {
   }
 
   async find(dto: FindProductDto) {
-    const findPage = await this.topPageModel.find(
-      {
-        firstCategory: dto.firstCategory,
-      },
-      {
-        alias: 1,
-        secondCategory: 1,
-        title: 1,
-      },
-    );
+    const findPage = await this.topPageModel
+      .aggregate([
+        {
+          $match: {
+            firstCategory: dto.firstCategory, // Match by firstCategory from dto
+          },
+        },
+        {
+          $group: {
+            _id: { secondCategory: '$secondCategory' }, // Group by secondCategory
+            pages: { $push: { alias: '$alias', title: '$title' } }, // Push alias and title into pages array
+          },
+        },
+      ])
+      .exec();
+
+    if (!findPage)
+      throw new BadGatewayException('Introduce right primary category');
+    return findPage;
+  }
+
+  async searchInTheWholePage(q: string) {
+    const findData = await this.topPageModel.find({
+      $text: { $search: q, $caseSensitive: false },
+    });
+
+    if (!findData) throw new NotFoundException('Sorry nothing find');
+    return findData;
   }
 }

@@ -24,6 +24,12 @@ export class ReviewController {
   async create(@Body() dto: CreateReviewDto) {
     return this.reviewService.create(dto);
   }
+  @UsePipes(new ValidationPipe())
+  @Post('notify')
+  async notify(@Body() dto: CreateReviewDto) {
+    return this.reviewService.create(dto);
+  }
+
   @UseGuards(JwtAuthGuard)
   @Delete(':id')
   async delete(
